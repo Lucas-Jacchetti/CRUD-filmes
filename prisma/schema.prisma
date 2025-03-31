@@ -9,3 +9,44 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Film{
+  // nome da variavel é id
+  // o tipo dela é int (ja que é um numero)
+  // adicionar decorators do prisma:
+  // - @id (pq é um ID)
+  // - @default(autoincrement()) (o numero default se auto incrementa)
+  id Int @id @default(autoincrement())
+  
+  //title é o nome da variavel
+  //tipo String
+  //@unique para diferenciar pelo titulo (dois filmes nao podem ter o mesmo titulo )
+  title String @unique
+
+  genre String
+  description String
+  year Int
+  director String
+
+  //model Reviews
+  //relação [] 'one to many' (cada filme pode ter infinitas reviews)
+  review Reviews[]
+}
+
+model Reviews{
+  id Int @id @default(autoincrement())
+
+  //grava a data em que a review foi criada
+  createdAt DateTime @default(now())
+
+  text String
+  filmId Int //para fazer o link com o filme
+
+  // declarar uma variavel 'film'
+  // do tipo Film (relaçao many-to-one)
+  // toda review esta ligada a um filme
+  // link do 'film' com a review baseada em
+  // o filmId do model Review
+  // o id no model Film
+  film Film @relation(fields: [filmId], references: [id])
+}
