@@ -18,6 +18,7 @@ const addFilm = async (req, res) => {  //passa uma request e response como param
     res.status(201).json(film); //coloca um starus de sucesso se der certo, e retorna um json com o 'film'  
     }
     catch (error){
+        console.log (error);
         res.status(400).json({error: 'Falha ao adicionar novo filme'}); 
     }
 };
@@ -32,6 +33,7 @@ const getFilmById = async (req, res) => {
         }
     }
     catch (error){
+        console.log(error);
         res.status(500).json({error: 'Erro interno'});
     }
 };

@@ -30,7 +30,7 @@ model Film{
 
   //model Reviews
   //relação [] 'one to many' (cada filme pode ter infinitas reviews)
-  review Reviews[]
+  //review Reviews[]
 }
 
 model Reviews{
@@ -48,5 +48,5 @@ model Reviews{
   // link do 'film' com a review baseada em
   // o filmId do model Review
   // o id no model Film
-  film Film @relation(fields: [filmId], references: [id])
+  //film Film @relation(fields: [filmId], references: [id])
 }

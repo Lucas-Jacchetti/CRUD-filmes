@@ -15,17 +15,17 @@ const addFilm = async (data) => { //passa as informações do filme como parâme
 
 //retorna por id
 const getFilmById = async (id) => { //passa o id do filme como parametro 
-    return await prisma.film.findUnique({where: {id: id}, data}); //acha o filme em que o id for o id passado como parametro
+    return await prisma.film.findUnique({where: {id: parseInt(id)}}); //acha o filme em que o id for o id passado como parametro
 };
 
 //faz o update
 const updateFilm = async (id, data) => {
-    return await prisma.film.update({where: {id: id}});//acha o filme em que o id for o id passado como parametro e faz o update
+    return await prisma.film.update({where: {id: parseInt(id)}, data});//acha o filme em que o id for o id passado como parametro e faz o update
 };
 
 //deleta por id
 const deleteFilm = async (id) => {
-    return await prisma.film.delete({where: {id: id}});
+    return await prisma.film.delete({where: {id: parseInt(id)}});
 }
 
 //exportando, ai outras partes da aplicação podem importar
