@@ -15,7 +15,7 @@ const addFilm = async (data) => { //passa as informações do filme como parâme
 
 //retorna por id
 const getFilmById = async (id) => { //passa o id do filme como parametro 
-    return await prisma.film.findUnique({where: {id: parseInt(id)}}); //acha o filme em que o id for o id passado como parametro
+    return await prisma.film.findUnique({include: {review:true}, where: {id: parseInt(id)}}); //acha o filme em que o id for o id passado como parametro
 };
 
 //faz o update
