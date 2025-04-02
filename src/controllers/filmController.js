@@ -15,7 +15,7 @@ const getAll = async (req, res) => {  //passa uma request e response como parame
 const addFilm = async (req, res) => {  //passa uma request e response como parametro
     try{ //tenta
     const film = await filmServices.addFilm(req.body); //armazena o novo filme em uma constante 'film'
-    res.status(201).json(film); //coloca um starus de sucesso se der certo, e retorna um json com o 'film'  
+    res.status(201).json(film); //coloca um status de sucesso se der certo, e retorna um json com o 'film'  
     }
     catch (error){
         console.log (error);
