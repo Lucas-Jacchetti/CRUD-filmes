@@ -5,7 +5,7 @@ const prisma = require('../prisma/prismaClient'); //conecta com o prisma (eu ach
 
 //retorna todos os filmes
 const getAll = async () => {
-    return await prisma.film.findMany(); 
+    return await prisma.film.findMany({include: {review:true}}); 
 };
 
 //adicionar um novo filme
