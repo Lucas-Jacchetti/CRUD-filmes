@@ -1,7 +1,7 @@
 //*TESTES PARA AS OPERAÇÕES DO CRUD (GET, POST, PUT, DELETE)
 
 const request = require('supertest');
-const app = require('../app'); // Import your Express app
+const app = require('../app'); //
 
 describe('GET /films', () => { //especificar qual o método e qual endpoint
     it('Deve retornar os filmes', async () => { //mensagem da expectativa
@@ -14,33 +14,51 @@ describe('GET /films', () => { //especificar qual o método e qual endpoint
 
 describe('POST /films', () => {
     it('Deve adicionar um filme', async () => {
-    const res = await request(app).post('/users').send({ //adiciona valores de teste para serem testados
-        "title": "O teste jest",
-        "genre": "Test",
-        "description": "Teste jest",
-        "year": 2000,
-        "director": "Jest Testador",
+    const uniqueTitle = `O teste jest ${Date.now()}`;
+    const res = await request(app).post('/films').send({ //adiciona valores de teste para serem testados
+        title: uniqueTitle,
+        genre: 'Test',
+        description: 'Teste jest',
+        year: 2000,
+        director: 'Jest Testador',
     });
     expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty('id');
-    expect(res.body.title).toBe('O teste jest');
+    expect(res.body.title).toBe(uniqueTitle);
     });
 });
 
 describe('PUT /films/:id', () => {
     it('Deve atualizar um filme existente', async () => {
-        const res = await request(app).put('/films/3').send({
-        name: 'Nome alterado',
+        const uniqueTitle = `O teste jest atualizado ${Date.now()}`;
+        const createdFilmPut = await request(app).post('/films').send({
+            title:  `O teste jest ${Date.now()}`, //cria um filme para ser deletado no teste
+            genre: 'Suspense',
+            description: 'Descrição',
+            year: 1999,
+            director: 'Diretor',
+        });
+        const res = await request(app).put(`/films/${createdFilmPut.body.id}`).send({
+        title:  uniqueTitle,
         });
         expect(res.statusCode).toBe(200);
-        expect(res.body.name).toBe('Nome alterado');
+        expect(res.body.title).toBe( uniqueTitle);
     });
 });
 
 describe('DELETE /films/:id', () => {
     it('Deve deletar um usuário', async () => {
-        const res = await request(app).delete('/films/3');
-        expect(res.statusCode).toBe(204); 
+        const uniqueTitle = `O teste jest ${Date.now()}`;
+        const createdFilm = await request(app).post('/films').send({
+            title: uniqueTitle, //cria um filme para ser deletado no teste
+            genre: 'Suspense',
+            description: 'Descrição',
+            year: 1999,
+            director: 'Diretor',
+        });
+        const res = await request(app).delete(`/films/${createdFilm.body.id}`);
+        expect(res.statusCode).toBe(204);
+
     });
 });    
 
